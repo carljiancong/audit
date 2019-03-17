@@ -2,10 +2,7 @@ package com.harmonycloud.entity;
 
 import com.harmonycloud.bo.Audit;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -16,6 +13,7 @@ import java.util.Date;
 @Table(name = "cims_audit")
 public class CimsAudit {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer auditId;
     @Column(name = "audit_date")
     private Date auditDate;
@@ -53,8 +51,7 @@ public class CimsAudit {
         this.applicationName = applicationName;
         this.infomation = infomation;
     }
-    public CimsAudit(Integer auditId, Audit audit) {
-        this.auditId = auditId;
+    public CimsAudit(Audit audit) {
         this.auditDate = audit.getDate();
         this.severityCD = audit.getSeverityCD();
         this.workstation = audit.getWorkstation();

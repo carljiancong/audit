@@ -60,8 +60,7 @@ public class Consumer implements CommandLineRunner {
                 // 会把不同的消息分别放置到不同的队列中
                 for(Message msg:msgs){
                     Audit audit = JSON.toJavaObject(JSON.parseObject(new String(msg.getBody())), Audit.class);
-                    Integer i = auditRepository.findAll().size();
-                    CimsAudit cimsAudit = new CimsAudit(i, audit);
+                    CimsAudit cimsAudit = new CimsAudit(audit);
                     auditRepository.save(cimsAudit);
                     System.out.println("接收到了消息："+new String(msg.getBody()));
                 }

@@ -3,12 +3,16 @@ package com.harmonycloud.rocketmq;
 import com.alibaba.fastjson.JSON;
 import com.harmonycloud.bo.Audit;
 import com.harmonycloud.entity.CimsAudit;
+import com.harmonycloud.enums.ErrorMsgEnum;
+import com.harmonycloud.exception.AuditException;
 import com.harmonycloud.repository.AuditRepository;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.Message;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -35,6 +39,8 @@ public class Consumer implements CommandLineRunner {
 
     @Autowired
     AuditRepository auditRepository;
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * 初始化RocketMq的监听信息，渠道信息
@@ -70,7 +76,8 @@ public class Consumer implements CommandLineRunner {
             consumer.start();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
+            throw new AuditException(ErrorMsgEnum.ROCKETMQ_ERROR.getMessage());
         }
     }
 

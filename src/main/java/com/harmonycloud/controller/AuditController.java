@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.InetAddress;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,15 +30,4 @@ public class AuditController {
         return new CimsResponseWrapper<List>(true, null, cimsAuditList);
     }
 
-//    @GetMapping("/send")
-//    public String send() {
-//        Audit audit = new Audit(new Date(), "Critical", "Computer", "11.11.11.11",
-//                12, "CIMS", "1212121212", "MedicationOrder", "123");
-//        try{
-//            producer.send("OrderTopic","OrderPush", JSON.toJSONString(audit));
-//        } catch(Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 }

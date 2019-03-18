@@ -4,7 +4,7 @@ package com.harmonycloud.enums;
 public enum ErrorMsgEnum {
 
     SERVICE_ERROR("Internal service error"),
-    PARAMETER_ERROR("Parameter error"),
+    QUERY_DATA_ERROR("query data error"),
     SAVE_ERROR("Save error"),
     UPDATE_ERROR("Update error"),
     ROCKETMQ_ERROR("Rocketmq send message error");

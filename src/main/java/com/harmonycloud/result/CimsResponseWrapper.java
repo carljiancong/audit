@@ -23,10 +23,12 @@ public class CimsResponseWrapper <E> {
     }
 
     public CimsResponseWrapper(boolean success, String errorMessage, E data) {
+        super();
         this.success = success;
         this.errorMessage = errorMessage;
         this.data = data;
     }
+
 
     public boolean isSuccess() {
         return success;
@@ -51,4 +53,5 @@ public class CimsResponseWrapper <E> {
     public void setData(E data) {
         this.data = data;
     }
+
 }

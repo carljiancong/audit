@@ -10,4 +10,6 @@ import java.util.List;
  * @date 2019/3/15
  */
 public interface AuditRepository extends JpaRepository<CimsAudit, Integer> {
+    List<CimsAudit> findByUserId(Integer userId);
+
 }

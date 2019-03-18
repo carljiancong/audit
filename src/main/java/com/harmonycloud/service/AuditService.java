@@ -33,4 +33,15 @@ public class AuditService {
         }
         return cimsAuditList;
     }
+
+    public List<CimsAudit> getAuditListByUserId(Integer userId) throws Exception {
+        List<CimsAudit> cimsAuditList = null;
+        try {
+            cimsAuditList = auditRepository.findByUserId(userId);
+        } catch(Exception e) {
+            logger.info(e.getMessage());
+            throw new AuditException(ErrorMsgEnum.QUERY_DATA_ERROR.getMessage());
+        }
+        return cimsAuditList;
+    }
 }

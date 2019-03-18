@@ -7,16 +7,20 @@ import com.harmonycloud.enums.ErrorMsgEnum;
 import com.harmonycloud.exception.AuditException;
 import com.harmonycloud.repository.AuditRepository;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.common.consumer.ConsumeFromWhere;
 import org.apache.rocketmq.common.message.Message;
+import org.apache.rocketmq.common.message.MessageExt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author qidong
@@ -45,9 +49,9 @@ public class Consumer implements CommandLineRunner {
     /**
      * 初始化RocketMq的监听信息，渠道信息
      */
-    public void messageListener(){
+    public void messageListener() {
 
-        DefaultMQPushConsumer consumer=new DefaultMQPushConsumer("Order");
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer("Order");
 
         consumer.setNamesrvAddr(namesrvAddr);
         try {
@@ -60,29 +64,35 @@ public class Consumer implements CommandLineRunner {
             //可以修改每次消费消息的数量，默认设置是每次消费一条
             consumer.setConsumeMessageBatchMaxSize(1);
 
-            //在此监听中消费信息，并返回消费的状态信息
             consumer.registerMessageListener((MessageListenerConcurrently) (msgs, context) -> {
+                //在此监听中消费信息，并返回消费的状态信息
 
-                // 会把不同的消息分别放置到不同的队列中
-                for(Message msg:msgs){
-                    Audit audit = JSON.toJavaObject(JSON.parseObject(new String(msg.getBody())), Audit.class);
-                    CimsAudit cimsAudit = new CimsAudit(audit);
-                    auditRepository.save(cimsAudit);
-                    System.out.println("接收到了消息："+new String(msg.getBody()));
+                try {
+                    // msgs中只收集同一个topic，同一个tag，并且key相同的message
+                    // 会把不同的消息分别放置到不同的队列中
+                    for (MessageExt messageExt : msgs) {
+                        Audit audit = JSON.parseObject(new String(messageExt.getBody()), Audit.class);
+                        CimsAudit cimsAudit = new CimsAudit(audit);
+                        auditRepository.save(cimsAudit);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ConsumeConcurrentlyStatus.RECONSUME_LATER; //稍后再试
                 }
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS; //消费成功
             });
 
             consumer.start();
 
-        } catch (Exception e) {
+        } catch (
+                Exception e)
+
+        {
             logger.info(e.getMessage());
             throw new AuditException(ErrorMsgEnum.ROCKETMQ_ERROR.getMessage());
         }
+
     }
-
-
-
 
 
     @Override

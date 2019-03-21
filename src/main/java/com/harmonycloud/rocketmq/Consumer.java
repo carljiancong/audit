@@ -1,7 +1,7 @@
 package com.harmonycloud.rocketmq;
 
 import com.alibaba.fastjson.JSON;
-import com.harmonycloud.bo.Audit;
+import com.harmonycloud.dto.Audit;
 import com.harmonycloud.entity.CimsAudit;
 import com.harmonycloud.enums.ErrorMsgEnum;
 import com.harmonycloud.exception.AuditException;
@@ -19,7 +19,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
 /**
- * @author qidong
  * @date 2019/3/4
  */
 @Service
@@ -38,7 +37,7 @@ public class Consumer implements CommandLineRunner {
 
 
     @Autowired
-    AuditRepository auditRepository;
+    private AuditRepository auditRepository;
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -80,10 +79,7 @@ public class Consumer implements CommandLineRunner {
 
             consumer.start();
 
-        } catch (
-                Exception e)
-
-        {
+        } catch (Exception e) {
             logger.info(e.getMessage());
             throw new AuditException(ErrorMsgEnum.ROCKETMQ_ERROR.getMessage());
         }

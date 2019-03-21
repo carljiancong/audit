@@ -5,8 +5,7 @@ public enum ErrorMsgEnum {
 
     SERVICE_ERROR("Internal service error"),
     QUERY_DATA_ERROR("query data error"),
-    SAVE_ERROR("Save error"),
-    UPDATE_ERROR("Update error"),
+    PARAMETER_ERROR("parameter error"),
     ROCKETMQ_ERROR("Rocketmq send message error");
 
     private String message;

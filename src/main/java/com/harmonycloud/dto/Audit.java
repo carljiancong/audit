@@ -1,7 +1,6 @@
-package com.harmonycloud.bo;
+package com.harmonycloud.dto;
 
 /**
- * @author qidong
  * @date 2019/3/15
  */
 import java.util.Date;
@@ -20,7 +19,8 @@ public class Audit {
     public Audit() {
     }
 
-    public Audit(Date date, String severityCD, String workstation, String clientIp, Integer userId, String projectCode, String correlationId, String applicationName, String infomation) {
+    public Audit(Date date, String severityCD, String workstation, String clientIp,
+                 Integer userId, String projectCode, String correlationId, String applicationName, String infomation) {
         this.date = date;
         this.severityCD = severityCD;
         this.workstation = workstation;

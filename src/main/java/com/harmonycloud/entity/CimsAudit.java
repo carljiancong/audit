@@ -1,12 +1,11 @@
 package com.harmonycloud.entity;
 
-import com.harmonycloud.bo.Audit;
+import com.harmonycloud.dto.Audit;
 
 import javax.persistence.*;
 import java.util.Date;
 
 /**
- * @author qidong
  * @date 2019/3/15
  */
 @Entity
@@ -101,7 +100,7 @@ public class CimsAudit {
     }
 
     public void setWorkstation(String workstation) {
-        workstation = workstation;
+        this.workstation = workstation;
     }
 
     public Integer getUserId() {

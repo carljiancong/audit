@@ -2,13 +2,10 @@ package com.harmonycloud.result;
 
 import io.swagger.annotations.ApiModelProperty;
 
-import java.io.Serializable;
-
 /**
- * @author qidong
  * @date 2019/2/15
  */
-public class CimsResponseWrapper <E> {
+public class CimsResponseWrapper<E> {
     @ApiModelProperty(required = true)
     private boolean success;
 

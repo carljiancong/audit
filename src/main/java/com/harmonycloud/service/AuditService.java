@@ -12,36 +12,34 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @author qidong
  * @date 2019/3/14
  */
 @Service
 public class AuditService {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final Logger logger = LoggerFactory.getLogger(AuditService.class);
 
     @Autowired
-    AuditRepository auditRepository;
+    private AuditRepository auditRepository;
 
+    /**
+     * get all audit list
+     * @return
+     * @throws Exception
+     */
     public List<CimsAudit> getAuditList() throws Exception {
-        List<CimsAudit> cimsAuditList = null;
-        try {
-            cimsAuditList = auditRepository.findAll();
-        } catch(Exception e) {
-            logger.info(e.getMessage());
-            throw new AuditException(ErrorMsgEnum.QUERY_DATA_ERROR.getMessage());
-        }
+        List<CimsAudit> cimsAuditList = auditRepository.findAll();
         return cimsAuditList;
     }
 
+    /**
+     * get audit list by user id
+     * @param userId
+     * @return
+     * @throws Exception
+     */
     public List<CimsAudit> getAuditListByUserId(Integer userId) throws Exception {
-        List<CimsAudit> cimsAuditList = null;
-        try {
-            cimsAuditList = auditRepository.findByUserId(userId);
-        } catch(Exception e) {
-            logger.info(e.getMessage());
-            throw new AuditException(ErrorMsgEnum.QUERY_DATA_ERROR.getMessage());
-        }
+        List<CimsAudit> cimsAuditList = auditRepository.findByUserId(userId);
         return cimsAuditList;
     }
 }

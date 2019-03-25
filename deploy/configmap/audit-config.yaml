@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: audit-config
+  namespace: dhcims-msapoc-dev
+data:
+  application.properties: |-
+    server.port=${port:8080}
+    spring.application.name=audit
+    # 消费者的组名
+    apache.rocketmq.consumer.pushConsumer=PushConsumer
+    # 生产者的组名
+    apache.rocketmq.producer.producerGroup=Order
+    # NameServer地址
+    apache.rocketmq.namesrvAddr=rocketmqsvc:9876
+
+    spring.datasource.url=jdbc:oracle:thin:@cimvmc1a:19305:cimc1d1
+    spring.datasource.username=CIMSAUDIT
+    spring.datasource.password=CIMSAUDIT
+    spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+    spring.jpa.show-sql=true
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.Oracle10gDialect
+    spring.jpa.hibernate.ddl-auto=validate
+    spring.jpa.properties.hibernate.globally_quoted_identifiers=true
+
+    logging.config=classpath:logback.xml

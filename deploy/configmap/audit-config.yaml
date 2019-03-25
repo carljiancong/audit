@@ -23,4 +23,5 @@ data:
     spring.jpa.hibernate.ddl-auto=validate
     spring.jpa.properties.hibernate.globally_quoted_identifiers=true
 
+    logging.path=/app-logs
     logging.config=classpath:logback.xml

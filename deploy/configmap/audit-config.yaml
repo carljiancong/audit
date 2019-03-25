@@ -15,8 +15,8 @@ data:
     apache.rocketmq.namesrvAddr=rocketmqsvc:9876
 
     spring.datasource.url=jdbc:oracle:thin:@cimvmc1a:19305:cimc1d1
-    spring.datasource.username=CIMSAUDIT
-    spring.datasource.password=CIMSAUDIT
+    spring.datasource.username=${ORACLE_USER}
+    spring.datasource.password=${ORACLE_PWD}
     spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
     spring.jpa.show-sql=true
     spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.Oracle10gDialect

@@ -12,7 +12,7 @@ import java.util.Date;
 @Table(name = "cims_audit")
 public class CimsAudit {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer auditId;
     @Column(name = "audit_date")
     private Date auditDate;
